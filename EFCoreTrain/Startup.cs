@@ -12,6 +12,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using StackExchange.Profiling.Storage;
 
 namespace EFCoreTrain
 {
@@ -34,10 +35,17 @@ namespace EFCoreTrain
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
+            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+
             //read connectionstring from appsetting.json
             services.AddDbContext<BloggingContext>(options => options.UseSqlServer(Configuration.GetConnectionString("Blogging")));
 
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+            services.AddMiniProfiler(options =>
+            {
+                ((MemoryCacheStorage)options.Storage).CacheDuration = TimeSpan.FromMinutes(60);
+                options.SqlFormatter = new StackExchange.Profiling.SqlFormatters.InlineFormatter();
+            }).AddEntityFramework();
+
             services.AddScoped<AuthorRepository>();
             //services.AddSingleton : สร้างตอนเริ่มครั้งเดียว
             //services.AddTransient : สร้างตลอดเวลา
@@ -49,6 +57,7 @@ namespace EFCoreTrain
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+                app.UseMiniProfiler();
             }
             else
             {
