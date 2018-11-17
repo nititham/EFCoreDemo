@@ -29,13 +29,15 @@ namespace EFCoreTrain.Controllers
             return View();
         }
 
-        public IActionResult Contact()
+        public string Contact()
         {
             ViewData["Message"] = "Your contact page.";
 
             var author = authorRepository.Get();
+            var authorEndWithT = authorRepository.GetEndWith("t");
+            authorRepository.Insert(new List<string> { "Yok4", "Yok5", "Yok6" });
 
-            return View();
+            return author.ToString();
         }
 
         public IActionResult Privacy()
