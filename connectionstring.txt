@@ -1,0 +1,10 @@
+192.168.99.19
+Blogging
+training
+asdf+1234
+
+Scaffold-DbContext -Connection "Server=192.168.99.19;Database=Blogging;user id=training;password=asdf+1234" -Provider Microsoft.EntityFrameworkCore.SqlServer -OutputDir Entities -Force 
+
+"ConnectionStrings": {
+    "Blogging": "Data Source=192.168.99.19;Initial Catalog=Blogging;User ID=training;Password=asdf+1234"
+  }

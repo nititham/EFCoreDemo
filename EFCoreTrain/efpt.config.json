@@ -1,0 +1,1 @@
+﻿{"ContextClassName":"BloggingContext","DefaultDacpacSchema":null,"IdReplace":false,"IncludeConnectionString":false,"OutputPath":"Entities","ProjectRootNamespace":"EFCoreTrain","SelectedToBeGenerated":0,"Tables":["dbo.Author","dbo.Blog","dbo.Post"],"UseDatabaseNames":false,"UseFluentApiOnly":true,"UseHandleBars":false,"UseInflector":false}
