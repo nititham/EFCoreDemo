@@ -1,9 +1,14 @@
-﻿using EFCoreTrain.Entities;
+﻿using Dapper;
+using EFCoreTrain.Entities;
+using EFCoreTrain.Entities.Functions;
+using EFCoreTrain.Entities.StoredProcedures;
+using EFCoreTrain.Entities.Views;
 using EFCoreTrain.Extensions;
 using EFCoreTrain.Models;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -75,6 +80,27 @@ namespace EFCoreTrain.Repositories
                 Post = x.Title,
                 Blog = x.Blog.Url
             }).ToList();
+        }
+
+        //Try to use Function in database
+        public string SetSuffix(string text)
+        {
+            return DbFunction.ExampleFunction(text);
+        }
+
+        //Try to use View in database
+        public List<PostDetailView> GetView()
+        {
+            return context.PostDetail.ToList();
+        }
+
+        public List<sp_GetPostDetail> GetStoredPostDetail()
+        {
+            using (var connection = new SqlConnection(context.Database.GetDbConnection().ConnectionString))
+            {
+                var result = connection.Query<sp_GetPostDetail>("EXECUTE dbo.sp_GetPostDetail @PostId", new { PostId = "1" }).ToList();
+                return result;
+            }
         }
     }
 }

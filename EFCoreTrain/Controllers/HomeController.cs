@@ -39,6 +39,8 @@ namespace EFCoreTrain.Controllers
             var authorThatNameStartWithYok = authorRepository.GetWhichNameBeginWith("Yok"); //Try to use custom Extension method
             var authorWithPosts = authorRepository.GetWithBlogs(); //Try to use Include and ThenInclude
             var posts = authorRepository.GetPostDetail(); //Try to use Select for good performance (query only necessary field)
+            //var authorWithSuffix = authorRepository.
+            var viewResult = authorRepository.GetView();
 
             return "Demo";
         }
