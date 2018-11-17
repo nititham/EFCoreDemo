@@ -35,9 +35,10 @@ namespace EFCoreTrain.Controllers
 
             var author = authorRepository.Get();
             var authorEndWithT = authorRepository.GetEndWith("t");
-            authorRepository.Insert(new List<string> { "Yok4", "Yok5", "Yok6" });
+            //authorRepository.Insert(new List<string> { "Yok4", "Yok5", "Yok6" });
+            var authorThatNameStartWithYok = authorRepository.GetWhichNameBeginWith("Yok");
 
-            return author.ToString();
+            return "Demo";
         }
 
         public IActionResult Privacy()

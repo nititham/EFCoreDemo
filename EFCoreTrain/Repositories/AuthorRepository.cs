@@ -1,4 +1,5 @@
 ﻿using EFCoreTrain.Entities;
+using EFCoreTrain.Extensions;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -50,6 +51,12 @@ namespace EFCoreTrain.Repositories
                     throw;
                 }
             }
+        }
+
+        //Try to use custom Extension method
+        public List<Author> GetWhichNameBeginWith(string key)
+        {
+            return context.Author.WhereIf(key.IsNotNullOrWhiteSpace(), x => x.Name.StartsWith(key)).ToList();
         }
     }
 }
