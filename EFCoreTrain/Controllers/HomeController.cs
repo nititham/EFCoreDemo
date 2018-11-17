@@ -35,7 +35,7 @@ namespace EFCoreTrain.Controllers
 
             var author = authorRepository.Get();
 
-            return View(author);
+            return View();
         }
 
         public IActionResult Privacy()
