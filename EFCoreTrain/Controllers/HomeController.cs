@@ -33,10 +33,12 @@ namespace EFCoreTrain.Controllers
         {
             ViewData["Message"] = "Your contact page.";
 
-            var author = authorRepository.Get();
-            var authorEndWithT = authorRepository.GetEndWith("t");
-            //authorRepository.Insert(new List<string> { "Yok4", "Yok5", "Yok6" });
-            var authorThatNameStartWithYok = authorRepository.GetWhichNameBeginWith("Yok");
+            var author = authorRepository.Get(); //Try to use DependencyInjection
+            var authorEndWithT = authorRepository.GetEndWith("t"); //Try to use Like in EFCore
+            //authorRepository.Insert(new List<string> { "Yok4", "Yok5", "Yok6" }); //Try to use TransactionScope
+            var authorThatNameStartWithYok = authorRepository.GetWhichNameBeginWith("Yok"); //Try to use custom Extension method
+            var authorWithPosts = authorRepository.GetWithBlogs(); //Try to use Include and ThenInclude
+            var posts = authorRepository.GetPostDetail(); //Try to use Select for good performance (query only necessary field)
 
             return "Demo";
         }

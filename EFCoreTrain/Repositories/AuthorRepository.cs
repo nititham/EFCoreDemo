@@ -1,5 +1,6 @@
 ﻿using EFCoreTrain.Entities;
 using EFCoreTrain.Extensions;
+using EFCoreTrain.Models;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -57,6 +58,23 @@ namespace EFCoreTrain.Repositories
         public List<Author> GetWhichNameBeginWith(string key)
         {
             return context.Author.WhereIf(key.IsNotNullOrWhiteSpace(), x => x.Name.StartsWith(key)).ToList();
+        }
+
+        //Try to use Include and ThenInclude
+        public List<Author> GetWithBlogs()
+        {
+            return context.Author.Include(x => x.Post).ThenInclude(x => x.Blog).ToList();
+        }
+
+        //Try to use Select for good performance (query only necessary field)
+        public List<PostDetail> GetPostDetail()
+        {
+            return context.Post.Select(x => new PostDetail
+            {
+                AuthorName = x.Author.Name,
+                Post = x.Title,
+                Blog = x.Blog.Url
+            }).ToList();
         }
     }
 }
